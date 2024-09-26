@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <time.h>
 
 #define BASE_ADDR 0x1A400000
 
@@ -17,11 +16,6 @@ uint32_t read_reg(volatile uint32_t *addr) {
     return *addr;
 }
 
-void delay(int ms) {
-    clock_t start_time = clock();
-    while (clock() < start_time + ms);
-}
-
 int main() {
     // Pointers to the IP registers
     volatile uint32_t *reg0 = (volatile uint32_t *)(BASE_ADDR + REG0_OFFSET);
@@ -32,15 +26,12 @@ int main() {
 
     // Write to the registers
     write_reg(reg_en, 0x1);
-    delay(1000);
     write_reg(reg0, 0x1234);
 
     write_reg(reg_en, 0x2);
-    delay(1000);
     write_reg(reg1, 0x5678);
 
     write_reg(reg_en, 0x4);
-    delay(1000);
     write_reg(reg2, 0x9ABC);
 
     // Read from the registers
