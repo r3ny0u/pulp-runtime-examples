@@ -6,13 +6,14 @@
 #define REG0_OFFSET 0x00
 #define REG1_OFFSET 0x04
 #define REG2_OFFSET 0x08
+#define REG_EN_OFFSET 0x0C
 
-void write_reg(volatile uint32_t *addr, uint32_t value, uint32_t reg_en) {
-    *addr = (value & 0xFFFFFFFF) | (reg_en ? 0x80000000 : 0x00000000);
+void write_reg(volatile uint32_t *addr, uint32_t value) {
+    *addr = value;
 }
 
 uint32_t read_reg(volatile uint32_t *addr) {
-    return *addr & 0xFFFFFFFF;
+    return *addr;
 }
 
 int main() {
@@ -21,10 +22,17 @@ int main() {
     volatile uint32_t *reg1 = (volatile uint32_t *)(BASE_ADDR + REG1_OFFSET);
     volatile uint32_t *reg2 = (volatile uint32_t *)(BASE_ADDR + REG2_OFFSET);
 
+    volatile uint32_t *reg_en = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
+
     // Write to the registers
-    write_reg(reg0, 0x1234, 1);
-    write_reg(reg1, 0x5678, 1);
-    write_reg(reg2, 0x9ABC, 1);
+    write_reg(reg_en, 0x1);
+    write_reg(reg0, 0x1234);
+
+    write_reg(reg_en, 0x2);
+    write_reg(reg1, 0x5678);
+
+    write_reg(reg_en, 0x4);
+    write_reg(reg2, 0x9ABC);
 
     // Read from the registers
     uint32_t reg0_val = read_reg(reg0);
