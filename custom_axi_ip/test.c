@@ -27,15 +27,15 @@ int main() {
 
     // Write to the registers
     write_reg(reg_en, 0x1);
-    usleep(5);
+    sleep(5);
     write_reg(reg0, 0x1234);
 
     write_reg(reg_en, 0x2);
-    usleep(5);
+    sleep(5);
     write_reg(reg1, 0x5678);
 
     write_reg(reg_en, 0x4);
-    usleep(5);
+    sleep(5);
     write_reg(reg2, 0x9ABC);
 
     // Read from the registers
