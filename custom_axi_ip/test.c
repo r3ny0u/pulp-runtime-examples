@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <pulp.h>
 
 #define BASE_ADDR 0x1A400000
 
@@ -25,12 +26,15 @@ int main() {
     volatile uint32_t *reg_en = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
 
     // Write to the registers
+    printf("Writing to the reg0\n");
     write_reg(reg_en, 0x1);
     write_reg(reg0, 0x1234);
 
+    printf("Writing to the reg1\n");
     write_reg(reg_en, 0x2);
     write_reg(reg1, 0x5678);
 
+    printf("Writing to the reg2\n");
     write_reg(reg_en, 0x4);
     write_reg(reg2, 0x9ABC);
 
