@@ -38,13 +38,13 @@ int main() {
     printf("Writing to the reg0\n");
     write_reg(reg0, 0x1234);
 
-    // write_reg(reg_en, 0x2);
-    // printf("Writing to the reg1\n");
-    // write_reg(reg1, 0x5678);
+    write_reg(reg_en, 0x2);
+    printf("Writing to the reg1\n");
+    write_reg(reg1, 0x5678);
 
-    // write_reg(reg_en, 0x4);
-    // printf("Writing to the reg2\n");
-    // write_reg(reg2, 0x9ABC);
+    write_reg(reg_en, 0x4);
+    printf("Writing to the reg2\n");
+    write_reg(reg2, 0x9ABC);
 
     // Read from the registers
     uint32_t reg0_val = read_reg(reg0);
