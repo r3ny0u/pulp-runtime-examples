@@ -18,6 +18,11 @@ uint32_t read_reg(volatile uint32_t *addr) {
     return *addr;
 }
 
+void write_enable(volatile uint32_t *addr, uint32_t value) {
+    uint32_t old_value = *addr;
+    *addr = value | old_value;
+}
+
 int main() {
     // Pointers to the IP registers
     volatile uint32_t *reg0 = (volatile uint32_t *)(BASE_ADDR + REG0_OFFSET);
@@ -32,29 +37,14 @@ int main() {
     write_reg(reg_en, 0x1);
     printf("Writing to the reg0\n");
     write_reg(reg0, 0x1234);
-    uint32_t reg_status_val = read_reg(reg_status);
-    printf("Reg_status: 0x%X\n", reg_status_val);
-    if (reg_status_val[0] == 0x1) {
-        write_reg(reg_status, 0x0);   
-    }
 
-    write_reg(reg_en, 0x2);
-    printf("Writing to the reg1\n");
-    write_reg(reg1, 0x5678);
-    uint32_t reg_status_val = read_reg(reg_status);
-    printf("Reg_status: 0x%X\n", reg_status_val);
-    if (reg_status_val[1] == 0x1) {
-        write_reg(reg_status, 0x0);   
-    }
+    // write_reg(reg_en, 0x2);
+    // printf("Writing to the reg1\n");
+    // write_reg(reg1, 0x5678);
 
-    write_reg(reg_en, 0x4);
-    printf("Writing to the reg2\n");
-    write_reg(reg2, 0x9ABC);
-    uint32_t reg_status_val = read_reg(reg_status);
-    printf("Reg_status: 0x%X\n", reg_status_val);
-    if (reg_status_val[2] == 0x1) {
-        write_reg(reg_status, 0x0);   
-    }
+    // write_reg(reg_en, 0x4);
+    // printf("Writing to the reg2\n");
+    // write_reg(reg2, 0x9ABC);
 
     // Read from the registers
     uint32_t reg0_val = read_reg(reg0);
