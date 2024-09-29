@@ -26,9 +26,9 @@ int main() {
     // Write to reg0, reg1, and reg2
     printf("Writing to reg0, reg1, and reg2...\n");
     custom_axi_ip_write(REG0_OFFSET, 0x12345678);  // Write some data to reg0
-    custom_axi_ip_write(REG1_OFFSET, 0x9ABCDEF0);  // Write some data to reg1
-    custom_axi_ip_write(REG2_OFFSET, 0x13579BDF);  // Write some data to reg2
-    custom_axi_ip_write(REG_EN_OFFSET, 0x7);  // Enable writing to reg0, reg1, and reg2
+    // custom_axi_ip_write(REG1_OFFSET, 0x9ABCDEF0);  // Write some data to reg1
+    // custom_axi_ip_write(REG2_OFFSET, 0x13579BDF);  // Write some data to reg2
+    custom_axi_ip_write(REG_EN_OFFSET, 0x1);  // Enable writing to reg0, reg1, and reg2
 
     // Read back the data from reg0, reg1, and reg2
     printf("Reading from reg0, reg1, and reg2...\n");
