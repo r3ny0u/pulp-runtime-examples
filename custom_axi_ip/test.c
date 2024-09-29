@@ -42,7 +42,7 @@ int main() {
 
     // Read output data from the IP
     printf("Reading output data from custom AXI IP...\n");
-    read_value = custom_axi_ip_read(REG_OUT_OFFSET);
+    read_value = custom_axi_ip_read(REG_EN_OFFSET);
     printf("Read output data: 0x%08X\n", read_value);
 
     return 0;
