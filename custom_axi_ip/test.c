@@ -24,7 +24,8 @@ void set_en(uint32_t value) {
     *addr = value;
 }
 
-uint32_t read_reg(volatile uint32_t *addr) {
+uint32_t read_reg(uint32_t offset) {
+    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + offset);
     return *addr;
 }
 
@@ -44,7 +45,7 @@ int main() {
     reg_en = 1;
 
     set_reg(REG0_OFFSET, reg0);
-    printf("Reg0_test read: %d\n", read_reg((volatile uint32_t *)(BASE_ADDR + REG0_OFFSET)));
+    printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET);
     printf("Reg0_test: %d\n", reg0);
     set_reg(REG1_OFFSET, reg1);
     set_reg(REG2_OFFSET, reg2);
