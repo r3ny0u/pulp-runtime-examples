@@ -8,58 +8,45 @@
 #define REG1_OFFSET 0x04
 #define REG2_OFFSET 0x08
 #define REG_EN_OFFSET 0x0C
-#define REG_STATUS_OFFSET 0x10
 
-void write_reg(volatile uint32_t *addr, uint32_t value) {
+void set_reg(uint32_t offset, uint32_t *value) {
     // *addr = value;
+
+    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + offset);
+    
     for (int i = 0; i < 256/32; i++) {
         addr[i] = value[i];
     }
+}
+
+void set_en(uint32_t *value) {
+    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
+    addr[0] = value[0];
 }
 
 uint32_t read_reg(volatile uint32_t *addr) {
     return *addr;
 }
 
-void write_enable(volatile uint32_t *addr, uint32_t value) {
-    uint32_t old_value = *addr;
-    *addr = value | old_value;
-}
-
 int main() {
     // Pointers to the IP registers
-    volatile uint32_t *reg0 = (volatile uint32_t *)(BASE_ADDR + REG0_OFFSET);
-    volatile uint32_t *reg1 = (volatile uint32_t *)(BASE_ADDR + REG1_OFFSET);
-    volatile uint32_t *reg2 = (volatile uint32_t *)(BASE_ADDR + REG2_OFFSET);
+    uint32_t reg0[32];
+    uint32_t reg1[32];
+    uint32_t reg2[32];
+    uint32_t reg_en[3];
 
-    volatile uint32_t *reg_en = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
+    memset(reg0, 0, sizeof(reg0));
+    memset(reg1, 0, sizeof(reg1));
+    memset(reg2, 0, sizeof(reg2));
+    memset(reg_en, 0, sizeof(reg_en));
 
-    volatile uint32_t *reg_status = (volatile uint32_t *)(BASE_ADDR + REG_STATUS_OFFSET);
+    reg0[0] = 3;
+    reg_en[0] = 1;
 
-    // Write to the registers
-    write_reg(reg0, 0x3);
-    printf("Writing to the reg0\n");
-    write_reg(reg_en, 0x1);
-    printf("Wrote to the reg0\n");
-
-    // write_reg(reg1, 0x1);
-    // write_reg(reg_en, 0x2);
-    // printf("Writing to the reg1\n");
-
-    // write_reg(reg2, 0xFFFFFFFF);
-    // write_reg(reg_en, 0x4);
-    // printf("Writing to the reg2\n");
-
-    // Read from the registers
-    uint32_t reg0_val = read_reg(reg0);
-    uint32_t reg1_val = read_reg(reg1);
-    uint32_t reg2_val = read_reg(reg2);
-    uint32_t reg_en_val = read_reg(reg_en);
-
-    printf("Reg0: 0x%X\n", reg0_val);
-    printf("Reg1: 0x%X\n", reg1_val);
-    printf("Reg2: 0x%X\n", reg2_val);
-    printf("Reg_en: 0x%X\n", reg_en_val);
+    set_reg(REG0_OFFSET, reg0);
+    set_reg(REG1_OFFSET, reg1);
+    set_reg(REG2_OFFSET, reg2);
+    set_en(reg_en);
 
     return 0;
 }
