@@ -55,7 +55,7 @@ int main() {
     set_en(reg_en);
     printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
 
-    write_reg0(4294967295);
+    write_reg0(4294967299);
     set_en(7);
     printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
 
