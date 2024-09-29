@@ -19,9 +19,9 @@ void set_reg(uint32_t offset, uint32_t *value) {
     }
 }
 
-void set_en(uint32_t *value) {
+void set_en(uint32_t value) {
     volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
-    addr[0] = value[0];
+    *addr = value;
 }
 
 uint32_t read_reg(volatile uint32_t *addr) {
