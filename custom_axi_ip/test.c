@@ -33,7 +33,7 @@ int main() {
     uint32_t reg0[32];
     uint32_t reg1[32];
     uint32_t reg2[32];
-    uint32_t reg_en[3];
+    uint32_t reg_en;
 
     memset(reg0, 0, sizeof(reg0));
     memset(reg1, 0, sizeof(reg1));
