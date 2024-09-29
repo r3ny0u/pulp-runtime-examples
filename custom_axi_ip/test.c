@@ -14,7 +14,7 @@ void set_reg(uint32_t offset, uint32_t *value) {
 
     volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + offset);
     
-    for (int i = 0; i < 256/32; i++) {
+    for (int i = 0; i < 96/32; i++) {
         addr[i] = value[i];
     }
 }
@@ -50,13 +50,9 @@ int main() {
 
     set_reg(REG0_OFFSET, reg0);
     printf("Reg0_test: %d\n", reg0);
-    set_reg(REG1_OFFSET, reg1);
-    set_reg(REG2_OFFSET, reg2);
+    set_reg(REG1_OFFSET, reg0);
+    set_reg(REG2_OFFSET, reg0);
     set_en(reg_en);
-    printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
-
-    write_reg0(4294967299);
-    set_en(7);
     printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
 
     return 0;
