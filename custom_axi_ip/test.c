@@ -41,9 +41,11 @@ int main() {
     memset(reg_en, 0, sizeof(reg_en));
 
     reg0[0] = 3;
-    reg_en[0] = 1;
+    reg_en = 1;
 
     set_reg(REG0_OFFSET, reg0);
+    printf("Reg0_test read: %d\n", read_reg((volatile uint32_t *)(BASE_ADDR + REG0_OFFSET)));
+    printf("Reg0_test: %d\n", reg0);
     set_reg(REG1_OFFSET, reg1);
     set_reg(REG2_OFFSET, reg2);
     set_en(reg_en);
