@@ -45,7 +45,7 @@ int main() {
     reg_en = 1;
 
     set_reg(REG0_OFFSET, reg0);
-    printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET);
+    printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
     printf("Reg0_test: %d\n", reg0);
     set_reg(REG1_OFFSET, reg1);
     set_reg(REG2_OFFSET, reg2);
