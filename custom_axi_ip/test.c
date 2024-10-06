@@ -4,57 +4,52 @@
 
 #define BASE_ADDR 0x1A400000
 
-#define REG0_OFFSET 0x0
-#define REG1_OFFSET 0x4
-#define REG2_OFFSET 0x8
-#define REG_EN_OFFSET 0xC
+#define DATA_OFFSET 0x0
+#define ENABLE_OFFSET 0x4
+#define STATUS_OFFSET 0x8
 
-void set_reg(uint32_t offset, uint32_t *value) {
-    // *addr = value;
+typedef enum {
+    IDLE = 0,
+    BUSY = 1,
+    DONE = 2,
+    ERROR = 3
+} status_e;
 
-    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + offset);
-    
-    for (int i = 0; i < 96/32; i++) {
-        addr[i] = value[i];
-    }
-}
-
-void set_en(uint32_t value) {
-    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + REG_EN_OFFSET);
-    *addr = value;
+void write_reg(uint32_t offset, uint32_t value) {
+    *(volatile uint32_t *)(BASE_ADDR + offset) = value;
 }
 
 uint32_t read_reg(uint32_t offset) {
-    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + offset);
-    for (int i = 0; i < 96/32; i++) {
-        printf("Reg[%d]: %d\n", i, addr[i]);
+    return *(volatile uint32_t *)(BASE_ADDR + offset);
+}
+
+void test_axi_ip() {
+    uint32_t data = 0x12345678;
+    write_reg(DATA_OFFSET, data);
+
+    write_reg(ENABLE_OFFSET, 1);
+
+    status_e status;
+    do {
+        status = (status_e)read_reg(STATUS_OFFSET);
+    } while (status != DONE);
+
+    uint32_t output_data = read_reg(DATA_OFFSET);
+    uint32_t expected_output_data = data + 1;
+    uint32_t enable = read_reg(ENABLE_OFFSET);
+
+    printf("Output data: %x\n", output_data);
+    printf("Expected output data: %x\n", expected_output_data);
+    printf("Enable: %x\n", enable);
+
+    if (output_data == expected_output_data) {
+        printf("Test passed\n");
+    } else {
+        printf("Test failed\n");
     }
 }
 
-void write_reg0 (uint32_t value) {
-    volatile uint32_t *addr = (volatile uint32_t *)(BASE_ADDR + REG0_OFFSET);
-    *addr = value;
-}
-
 int main() {
-    // Pointers to the IP registers
-    uint32_t reg0[32];
-    uint32_t reg1[32];
-    uint32_t reg2[32];
-    uint32_t reg_en = 0;
-
-    memset(reg0, 0, sizeof(reg0));
-    memset(reg1, 0, sizeof(reg1));
-    memset(reg2, 0, sizeof(reg2));
-
-    reg0[0] = 3;
-    reg_en = 7;
-
-    set_reg(REG0_OFFSET, reg0);
-    set_reg(REG1_OFFSET, reg0);
-    set_reg(REG2_OFFSET, reg0);
-    set_en(reg_en);
-    printf("Reg0_test read: %d\n", read_reg(REG0_OFFSET));
-
+    test_axi_ip();
     return 0;
 }
