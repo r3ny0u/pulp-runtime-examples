@@ -32,6 +32,7 @@ void test_axi_ip() {
     status_e status;
     do {
         status = (status_e)read_reg(STATUS_OFFSET);
+        printf("Status: %d\n", status);
     } while (status != DONE);
 
     uint32_t output_data = read_reg(DATA_OFFSET);
