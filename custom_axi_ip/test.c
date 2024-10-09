@@ -26,9 +26,13 @@ uint32_t read_reg(uint32_t offset) {
 void test_axi_ip() {
     uint32_t data = 0x12345678;
     write_reg(DATA_OFFSET, data);
+    printf("Data after write: %x\n", read_reg(DATA_OFFSET));
 
-    write_reg(ENABLE_OFFSET, 1);
+    write_reg(ENABLE_OFFSET, 0x1);
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
+
+    write_reg(STATUS_OFFSET, 0x2);
+    printf("Status after write: %x\n", read_reg(STATUS_OFFSET));
 
     status_e status;
     do {
