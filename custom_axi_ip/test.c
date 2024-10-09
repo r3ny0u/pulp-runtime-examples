@@ -28,11 +28,11 @@ void test_axi_ip() {
     write_reg(DATA_OFFSET, data);
 
     write_reg(ENABLE_OFFSET, 1);
+    printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
     status_e status;
     do {
         status = (status_e)read_reg(STATUS_OFFSET);
-        // printf("Status: %d\n", status);
     } while (status != DONE);
 
     uint32_t output_data = read_reg(DATA_OFFSET);
