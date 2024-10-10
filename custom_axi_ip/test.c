@@ -35,7 +35,7 @@ void test_axi_ip() {
     uint32_t output_data = read_reg(DATA_OFFSET);
     uint32_t expected_output_data = data + 1;
     uint32_t enable = read_reg(ENABLE_OFFSET);
-    state_e status = read_reg(STATUS_OFFSET);
+    status_e status = read_reg(STATUS_OFFSET);
 
     printf("Output data: %x\n", output_data);
     printf("Expected output data: %x\n", expected_output_data);
