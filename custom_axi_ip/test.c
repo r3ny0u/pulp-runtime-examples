@@ -5,8 +5,8 @@
 #define BASE_ADDR 0x1A400000
 
 #define DATA_OFFSET 0x0
-#define ENABLE_OFFSET 0x4
-#define STATUS_OFFSET 0x8
+#define ENABLE_OFFSET 0x8
+#define STATUS_OFFSET 0xc
 
 typedef enum {
     IDLE = 0,
