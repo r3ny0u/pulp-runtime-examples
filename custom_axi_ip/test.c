@@ -38,8 +38,9 @@ void test_axi_ip() {
     memset(data, 0, sizeof(data));
     data[0] = 0x12345678;
 
+    status_e status;
     do {
-        status_e status = read_reg(STATUS_OFFSET);
+        status = read_reg(STATUS_OFFSET);
     } while (status != IDLE);
 
     write_data(data);
