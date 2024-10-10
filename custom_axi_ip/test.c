@@ -17,8 +17,7 @@ typedef enum {
 
 void write_reg(uint32_t offset, uint32_t value) {
     uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + offset);
-    printf("Write %x to %x\n", value, reg);
-    reg[0] = value;
+    *reg = value;
 }
 
 uint32_t read_reg(uint32_t offset) {
@@ -26,20 +25,22 @@ uint32_t read_reg(uint32_t offset) {
 }
 
 void test_axi_ip() {
-    uint32_t data = 0x3;
+    uint32_t data = 0xFFFFFFFF;
     write_reg(DATA_OFFSET, data);
     printf("Data after write: %x\n", read_reg(DATA_OFFSET));
 
-    write_reg(ENABLE_OFFSET, 0x1);
+    write_reg(ENABLE_OFFSET, 1);
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
     uint32_t output_data = read_reg(DATA_OFFSET);
     uint32_t expected_output_data = data + 1;
     uint32_t enable = read_reg(ENABLE_OFFSET);
+    state_e status = read_reg(STATUS_OFFSET);
 
     printf("Output data: %x\n", output_data);
     printf("Expected output data: %x\n", expected_output_data);
     printf("Enable: %x\n", enable);
+    printf("Status: %x\n", status);
 
     if (output_data == expected_output_data) {
         printf("Test passed\n");
