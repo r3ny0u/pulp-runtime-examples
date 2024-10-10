@@ -86,6 +86,10 @@ void clear_error(void)
   *ctrl1_reg = (1 & 0x1)<<WIDE_ALU_CTRL1_CLEAR_ERR_BIT;
 }
 
+uint32_t read_reg(uint32_t offset) {
+    return *(volatile uint32_t *)(WIDE_ALU0_BASE_ADDR + offset);
+}
+
 int wide_multiply(uint32_t a[8], uint32_t b[8], uint32_t result[16]) {
     int status = poll_done();
     if (status != 0) {
@@ -93,6 +97,7 @@ int wide_multiply(uint32_t a[8], uint32_t b[8], uint32_t result[16]) {
 	return status;
     }
     set_operands(a, b);
+    printf("Op_a: %d\n", read_reg(WIDE_ALU_OP_A_0_REG_OFFSET));
     set_op(WIDE_ALU_CTRL2_OPSEL_VALUE_MUL);
 
     trigger_op();
