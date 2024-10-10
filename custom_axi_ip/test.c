@@ -18,6 +18,7 @@ typedef enum {
 void write_reg(uint32_t offset, uint32_t value) {
     uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + offset);
     *reg = value;
+    printf("Write %x to %x\n", value, reg);
 }
 
 uint32_t read_reg(uint32_t offset) {
@@ -25,7 +26,7 @@ uint32_t read_reg(uint32_t offset) {
 }
 
 void test_axi_ip() {
-    uint32_t data = 0x12345678;
+    uint32_t data = 0x3;
     write_reg(DATA_OFFSET, data);
     printf("Data after write: %x\n", read_reg(DATA_OFFSET));
 
