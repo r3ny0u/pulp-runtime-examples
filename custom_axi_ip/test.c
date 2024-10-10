@@ -15,25 +15,37 @@ typedef enum {
     ERROR = 3
 } status_e;
 
-void write_reg(uint32_t offset, uint32_t value) {
-    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + offset);
-    *reg = value;
-    asm volatile ("": : : "memory");
-}
-
 uint32_t read_reg(uint32_t offset) {
     return *(volatile uint32_t *)(BASE_ADDR + offset);
 }
 
+void write_data(uint32_t *data) {
+    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + DATA_OFFSET);
+    for (int i = 0; i < 2; i++) {
+        reg[i] = data[i];
+    }
+    asm volatile ("": : : "memory");
+}
+
+void enable() {
+    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + ENABLE_OFFSET);
+    *reg = 1;
+    asm volatile ("": : : "memory");
+}
+
 void test_axi_ip() {
-    // uint32_t data[1];
-    // memset(data, 0, sizeof(data));
-    // data[0] = 0x12345678;
-    uint32_t data = 0x12345678;
-    write_reg(DATA_OFFSET, data);
+    uint32_t data[2];
+    memset(data, 0, sizeof(data));
+    data[0] = 0x12345678;
+
+    do {
+        status_e status = read_reg(STATUS_OFFSET);
+    } while (status != IDLE);
+
+    write_data(data);
     printf("Data after write: %x\n", read_reg(DATA_OFFSET));
 
-    write_reg(ENABLE_OFFSET, 1);
+    enable();
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
     uint32_t output_data = read_reg(DATA_OFFSET);
