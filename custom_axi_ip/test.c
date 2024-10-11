@@ -49,6 +49,10 @@ void test_axi_ip() {
     enable();
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
+    data[0]++;
+    write_data(data);
+    enable();
+
     uint32_t output_data = read_reg(DATA_OFFSET);
     uint32_t expected_output_data = data[0] + 1;
     uint32_t enable = read_reg(ENABLE_OFFSET);
