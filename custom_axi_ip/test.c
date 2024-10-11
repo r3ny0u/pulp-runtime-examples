@@ -37,6 +37,7 @@ void test_axi_ip() {
     uint32_t data[2];
     memset(data, 0, sizeof(data));
     data[0] = 0x12345678;
+    data[1] = 0x87654321;
 
     status_e status;
     do {
@@ -50,6 +51,7 @@ void test_axi_ip() {
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
     data[0]++;
+    data[1]++;
     write_data(data);
     enable();
 
