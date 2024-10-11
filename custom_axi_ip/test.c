@@ -5,6 +5,7 @@
 #define BASE_ADDR 0x1A400000
 
 #define DATA_OFFSET 0x0
+#define DATA2_OFFSET 0x4
 #define ENABLE_OFFSET 0x8
 #define STATUS_OFFSET 0xc
 
@@ -20,10 +21,10 @@ uint32_t read_reg(uint32_t offset) {
 }
 
 void write_data(uint32_t *data) {
-    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + DATA_OFFSET);
-    for (int i = 0; i < 2; i++) {
-        reg[i] = data[i];
-    }
+    uint32_t volatile *reg0 = (uint32_t *)(BASE_ADDR + DATA_OFFSET);
+    uint32_t volatile *reg1 = (uint32_t *)(BASE_ADDR + DATA2_OFFSET);
+    *reg0 = data;
+    *reg1 = data + 1;
     asm volatile ("": : : "memory");
 }
 
@@ -34,10 +35,7 @@ void enable() {
 }
 
 void test_axi_ip() {
-    uint32_t data[2];
-    memset(data, 0, sizeof(data));
-    data[0] = 0x12345678;
-    data[1] = 0x87654321;
+    uint32_t data = 0x1;
 
     status_e status;
     do {
@@ -46,14 +44,16 @@ void test_axi_ip() {
 
     write_data(data);
     printf("Data after write: %x\n", read_reg(DATA_OFFSET));
+    printf("Data2 after write: %x\n", read_reg(DATA2_OFFSET));
 
     enable();
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
 
-    data[0]++;
-    data[1]++;
     write_data(data);
+    printf("Data after write 2: %x\n", read_reg(DATA_OFFSET));
+    printf("Data2 after write 2: %x\n", read_reg(DATA2_OFFSET));
     enable();
+    printf("Enable after write 2: %x\n", read_reg(ENABLE_OFFSET));
 
     uint32_t output_data = read_reg(DATA_OFFSET);
     uint32_t expected_output_data = data[0] + 1;
