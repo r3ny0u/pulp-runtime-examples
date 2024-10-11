@@ -20,7 +20,7 @@ uint32_t read_reg(uint32_t offset) {
     return *(volatile uint32_t *)(BASE_ADDR + offset);
 }
 
-void write_data(uint32_t *data) {
+void write_data(uint32_t data) {
     uint32_t volatile *reg0 = (uint32_t *)(BASE_ADDR + DATA_OFFSET);
     uint32_t volatile *reg1 = (uint32_t *)(BASE_ADDR + DATA2_OFFSET);
     *reg0 = data;
