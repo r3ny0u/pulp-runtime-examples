@@ -34,26 +34,32 @@ void enable() {
     asm volatile ("": : : "memory");
 }
 
+void write_data_reg(uint32_t *data) {
+    uint8_t volatile *reg = (uint8_t *)(BASE_ADDR + DATA_OFFSET);
+    for (size_t i = 0; i < 2; i++) {
+        reg[i] = data[i];
+    }
+    asm volatile ("": : : "memory");
+}
+
 void test_axi_ip() {
-    uint32_t data = 0x1;
+    uint32_t data[2];
+    memset(data, 0, sizeof(data));
+    data[0] = 0x89ABCDEF;
+    printf("data: %x\n", data[0]);
 
     status_e status;
     do {
         status = read_reg(STATUS_OFFSET);
     } while (status != IDLE);
 
-    write_data(data);
+    // write_data(data);
+    write_data_reg(data);
     printf("Data after write: %x\n", read_reg(DATA_OFFSET));
     printf("Data2 after write: %x\n", read_reg(DATA2_OFFSET));
 
     enable();
     printf("Enable after write: %x\n", read_reg(ENABLE_OFFSET));
-
-    write_data(data);
-    printf("Data after write 2: %x\n", read_reg(DATA_OFFSET));
-    printf("Data2 after write 2: %x\n", read_reg(DATA2_OFFSET));
-    enable();
-    printf("Enable after write 2: %x\n", read_reg(ENABLE_OFFSET));
 
     uint32_t output_data = read_reg(DATA_OFFSET);
     uint32_t expected_output_data = data + 1;
