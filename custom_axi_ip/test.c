@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <pulp.h>
+#include "pulp.h"
 // #include <custom_axi_ip.h>
 // #include <custom_axi_ip_driver.h>
 
-#define BASE_ADDR 0x1A500000
+// #define BASE_ADDR 0x1A500000
 
 // #define DIN_OFFSET 0x0
 // #define DOUT_OFFSET 0x4
@@ -71,6 +71,7 @@ int main() {
 
     din[0] = 0x12345678;
 
+    printf("Begin test\n");
     start_test(din, dout);
     return 0;
 }
