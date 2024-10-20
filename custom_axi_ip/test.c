@@ -64,8 +64,8 @@
 // }
 
 int main() {
-    uin32_t din[1];
-    uin32_t dout[1];
+    uint32_t din[1];
+    uint32_t dout[1];
     memset(din, 0, sizeof(din));
     memset(dout, 0, sizeof(dout));
 
