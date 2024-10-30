@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <pulp.h>
 
-#define BASE_ADDR 0x1A400000
+#define BASE_ADDR 0x1A140000
 #define CUSTOM_AXI_IP_DIN_REG_OFFSET 0x00
 #define CUSTOM_AXI_IP_DOUT_REG_OFFSET 0x04
 #define CUSTOM_AXI_IP_ENABLE_REG_OFFSET 0x08
