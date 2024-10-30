@@ -38,7 +38,7 @@ void start_test (uint32_t din[1], uint32_t dout[1]) {
     write_data(din);
     enable();
     //wait();
-    read_data(dout);
+    // read_data(dout);
 }
 
 int main() {
@@ -49,7 +49,7 @@ int main() {
 
     din[0] = 0x00000001;
 
-    // start_test(din, dout);
+    start_test(din, dout);
     printf("End test\n");
     return 0;
 }
