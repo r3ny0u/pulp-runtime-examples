@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <pulp.h>
+// #include <pulp.h>
 
 #define BASE_ADDR 0x1A140000
 #define CUSTOM_AXI_IP_DIN_REG_OFFSET 0x00
@@ -11,7 +11,7 @@
 
 void write_data(uint32_t *din) {
     uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET);
-    reg = din;
+    *reg = *din;
     // reg[0] = din[0];
 }
 
@@ -34,6 +34,7 @@ void wait() {
 }
 
 void start_test (uint32_t din[1], uint32_t dout[1]) {
+    printf("Begin test\n");
     write_data(din);
     enable();
     //wait();
@@ -46,9 +47,9 @@ int main() {
     memset(din, 0, sizeof(din));
     memset(dout, 0, sizeof(dout));
 
-    din[0] = 0x12345678;
+    din[0] = 0x00000001;
 
-    printf("Begin test\n");
     start_test(din, dout);
+    printf("End test\n");
     return 0;
 }
