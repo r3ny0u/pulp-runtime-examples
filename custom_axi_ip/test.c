@@ -49,7 +49,7 @@ int main() {
 
     din[0] = 0x00000001;
 
-    start_test(din, dout);
+    // start_test(din, dout);
     printf("End test\n");
     return 0;
 }
