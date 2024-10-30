@@ -37,7 +37,7 @@ void wait() {
 void start_test (uint32_t din) {
     printf("Begin test\n");
     write_data(din);
-    enable();
+    // enable();
     //wait();
     // read_data(dout);
 }
