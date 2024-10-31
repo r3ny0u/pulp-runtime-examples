@@ -9,8 +9,8 @@
 #define CUSTOM_AXI_IP_STATUS_REG_OFFSET 0x0C
 #define CUSTOM_AXI_IP_STATUS_STATUS_VALUE_IDLE 0x10
 
-void write_data(uint32_t din) {
-    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET);
+void write_data(uint16_t din) {
+    uint16_t volatile *reg = (uint16_t *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET);
     *reg = din;
     // reg[0] = din[0];
 }
@@ -34,9 +34,9 @@ void wait() {
 }
 
 // void start_test (uint32_t din[1], uint32_t dout[1]) {
-void start_test (uint32_t din) {
+void start_test (uint16_t din) {
     printf("Begin test\n");
-    // write_data(din);
+    write_data(din);
     // enable();
     //wait();
     // read_data(dout);
@@ -51,7 +51,7 @@ int main() {
     // din[0] = 0x00000001;
 
     // start_test(din, dout);
-    uint32_t din = 0x0001;
+    uint16_t din = 0x0001;
     start_test(din);
     printf("End test\n");
     return 0;
