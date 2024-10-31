@@ -36,7 +36,7 @@ void enable() {
 void start_test (uint16_t din) {
     printf("Begin test\n");
     write_data(din);
-    // enable();
+    enable();
     //wait();
     // read_data(dout);
 }
