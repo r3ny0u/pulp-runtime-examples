@@ -24,21 +24,21 @@ void enable() {
     *reg = 1;
 }
 
-// void wait() {
-//     uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_STATUS_REG_OFFSET);
-//     uint32_t status;
-//     do {
-//         status = *reg;
-//     } while (status != CUSTOM_AXI_IP_STATUS_STATUS_VALUE_IDLE);
-// }
+void wait() {
+    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_STATUS_REG_OFFSET);
+    uint32_t status;
+    do {
+        status = *reg;
+    } while (status != 2);
+}
 
 // void start_test (uint32_t din[1], uint32_t dout[1]) {
 void start_test (uint32_t din) {
     printf("Begin test\n");
     write_data(din);
     enable();
-    //wait();
-    // read_data(dout);
+    wait();
+    read_data();
 }
 
 int main() {
