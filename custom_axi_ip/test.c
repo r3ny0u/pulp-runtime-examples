@@ -9,13 +9,13 @@
 #define CUSTOM_AXI_IP_STATUS_REG_OFFSET 0x0C
 
 void write_data(uint32_t din) {
-    uint32_t volatile *reg = (uint16_t *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET);
+    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET);
     *reg = din;
     // reg[0] = din[0];
 }
 
 void read_data() {
-    uint32_t volatile *reg = (uint16_t *)(BASE_ADDR + CUSTOM_AXI_IP_DOUT_REG_OFFSET);
+    uint32_t volatile *reg = (uint32_t *)(BASE_ADDR + CUSTOM_AXI_IP_DOUT_REG_OFFSET);
     printf("Result: %x\n", *reg);
 }
 
@@ -50,7 +50,7 @@ int main() {
     // din[0] = 0x00000001;
 
     // start_test(din, dout);
-    uint32_t din = 0x12345678;
+    uint32_t din = 0x1;
     start_test(din);
     printf("End test\n");
     return 0;
