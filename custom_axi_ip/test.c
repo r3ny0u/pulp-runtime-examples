@@ -36,7 +36,7 @@ void start_test (uint32_t din) {
     printf("Begin test\n");
     // write_data(din);
     *(uint32_t volatile *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET) = 0x12345678;
-    __asm__ __volatile__ ("" : : : "memory");
+    // __asm__ __volatile__ ("" : : : "memory");
     enable();
     // wait();
     // read_data();
@@ -45,8 +45,8 @@ void start_test (uint32_t din) {
 int main() {
     uint32_t din = 0x1;
     // start_test(din);
-    *(uint32_t volatile *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET) = 0x12345678;
-    __asm__ __volatile__ ("" : : : "memory");
+    *(uint16_t volatile *)(BASE_ADDR + CUSTOM_AXI_IP_DIN_REG_OFFSET) = 1;
+    // __asm__ __volatile__ ("" : : : "memory");
     enable();
     printf("End test\n");
     return 0;
